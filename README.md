@@ -243,6 +243,12 @@ Open **http://localhost:8501** and ask a question.
 
 Every answer includes a **"View generated SQL"** panel showing the exact query that was run.
 
+
+<img width="1370" height="764" alt="Screenshot 2026-10-16 190921" src="https://github.com/user-attachments/assets/1c701fd0-d9b2-46c9-b86d-0a83dc7189b8" />
+<img width="1361" height="553" alt="Screenshot 2026-10-16 190953" src="https://github.com/user-attachments/assets/d9d37fb9-98a3-4546-a9fd-e255cce93ba6" />
+<img width="1398" height="668" alt="Screenshot 2026-10-16 191051" src="https://github.com/user-attachments/assets/476588d0-c00d-4e17-897b-b4680134026e" />
+
+
 ---
 
 ## 🔒 Security
