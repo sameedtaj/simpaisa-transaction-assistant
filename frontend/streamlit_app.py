@@ -1,10 +1,18 @@
-
+import hmac
 import json
+import os
 from typing import Any
 
 import pandas as pd
 import requests
 import streamlit as st
+
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except ImportError:
+    pass
 
 
 API_BASE_URL = "http://127.0.0.1:8000"
@@ -20,6 +28,37 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+
+def check_password() -> bool:
+    """Show a login screen and return True only when the password is correct."""
+
+    if st.session_state.get("authenticated"):
+        return True
+
+    app_password = os.getenv("APP_PASSWORD")
+
+    st.title("🔒 SIMPAISA Transaction Assistant")
+
+    if not app_password:
+        st.error(
+            "APP_PASSWORD is not set. Add it to your .env file "
+            "(or to the environment variables on your cloud host)."
+        )
+        return False
+
+    with st.form("login_form"):
+        password = st.text_input("Enter password", type="password")
+        submitted = st.form_submit_button("Login")
+
+    if submitted:
+        if hmac.compare_digest(password, app_password):
+            st.session_state["authenticated"] = True
+            st.rerun()
+        else:
+            st.error("Incorrect password")
+
+    return False
 
 
 def initialize_session_state() -> None:
@@ -323,6 +362,9 @@ def process_question(question: str) -> None:
 
 def main() -> None:
     """Run the Streamlit application."""
+
+    if not check_password():
+        st.stop()
 
     initialize_session_state()
     render_sidebar()
