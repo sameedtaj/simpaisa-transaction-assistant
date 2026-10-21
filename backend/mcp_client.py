@@ -1,4 +1,4 @@
-
+import os
 import sys
 from pathlib import Path
 
@@ -15,6 +15,7 @@ async def call_mcp_tool(tool_name: str, arguments: dict) -> str:
         command=sys.executable,
         args=[str(SERVER_PATH)],
         cwd=str(PROJECT_ROOT),
+        env=dict(os.environ),
     )
 
     with open(LOG_PATH, "w", encoding="utf-8") as errlog:

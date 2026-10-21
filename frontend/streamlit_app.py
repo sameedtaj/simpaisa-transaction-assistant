@@ -15,7 +15,7 @@ except ImportError:
     pass
 
 
-API_BASE_URL = "http://127.0.0.1:8000"
+API_BASE_URL = os.getenv("API_BASE_URL", "http://127.0.0.1:8000")
 CHAT_ENDPOINT = f"{API_BASE_URL}/chat"
 HEALTH_ENDPOINT = f"{API_BASE_URL}/health"
 
@@ -244,7 +244,7 @@ def render_sidebar() -> None:
             "Give me successful transaction count for June 2026",
             "Give me total amount for June 2026",
             "Show successful transaction count by operator for June 2026",
-            "Give me transaction details for mobile number 3097524704 in June 2026",
+            "Give me transaction details for mobile number 3001234567 in June 2026",
         ]
 
         for example in examples:
