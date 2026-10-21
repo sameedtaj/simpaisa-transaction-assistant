@@ -1,6 +1,10 @@
 import hmac
 import json
 import os
+import subprocess
+import sys
+import time
+from pathlib import Path
 from typing import Any
 
 import pandas as pd
@@ -28,6 +32,42 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+
+@st.cache_resource
+def start_embedded_backend():
+    """
+    Optional: start the FastAPI backend inside this app.
+
+    Used on hosts that only run Streamlit (e.g. Streamlit Community Cloud).
+    Turned on only when EMBED_BACKEND=true, so local and Docker runs are unchanged.
+    """
+
+    if os.getenv("EMBED_BACKEND", "").lower() != "true":
+        return None
+
+    project_root = Path(__file__).resolve().parents[1]
+
+    process = subprocess.Popen(
+        [
+            sys.executable, "-m", "uvicorn", "backend.app:app",
+            "--host", "127.0.0.1", "--port", "8000",
+        ],
+        cwd=str(project_root),
+    )
+
+    for _ in range(30):
+        try:
+            if requests.get(HEALTH_ENDPOINT, timeout=1).status_code == 200:
+                break
+        except requests.RequestException:
+            pass
+        time.sleep(1)
+
+    return process
+
+
+start_embedded_backend()
 
 
 def check_password() -> bool:
