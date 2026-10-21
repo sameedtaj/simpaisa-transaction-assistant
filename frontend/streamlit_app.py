@@ -34,6 +34,24 @@ st.set_page_config(
 )
 
 
+def load_secrets_into_environment() -> None:
+    """
+    On Streamlit Cloud, settings live in st.secrets.
+    Copy them into environment variables so os.getenv() and the
+    embedded backend can read them. Locally (no secrets file) this does nothing.
+    """
+
+    try:
+        for key, value in st.secrets.items():
+            if isinstance(value, (str, int, float, bool)):
+                os.environ.setdefault(key, str(value))
+    except Exception:
+        pass
+
+
+load_secrets_into_environment()
+
+
 @st.cache_resource
 def start_embedded_backend():
     """
