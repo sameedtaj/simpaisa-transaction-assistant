@@ -2,6 +2,8 @@
 
 # 💬 SIMPAISA Transaction Assistant
 
+> **An LLM that bridges business and technical stakeholders.** Business teams ask questions in plain English; the assistant converts them into safe, read-only SQL, runs them through an MCP server, and returns clear answers — no SQL knowledge or analyst ticket needed.
+
 **A natural-language-to-SQL assistant: ask questions about transactions in plain English and get answers straight from the database.**
 
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
